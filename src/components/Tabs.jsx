@@ -8,7 +8,7 @@ export const Tabs = () => {
 
     const loadTabsData = async () => {
         try {
-            const response = await fetch('/public/data/tabs.json')
+            const response = await fetch('/data/tabs.json')
             const data = await response.json()
 
             setTabsData(data)
