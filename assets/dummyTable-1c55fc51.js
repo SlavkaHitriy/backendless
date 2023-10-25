@@ -1,0 +1,1 @@
+import{j as e}from"./index-0430707d.js";const t=()=>e.jsx("table",{children:e.jsx("tbody",{children:e.jsxs("tr",{children:[e.jsx("td",{children:"Dummy"}),e.jsx("td",{children:"Table"})]})})});export{t as default};
