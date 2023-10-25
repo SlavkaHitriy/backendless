@@ -13,10 +13,6 @@ export const App = () => {
             <div style={{
                 padding: '24px'
             }}>
-                <div style={{
-                    fontWeight: 'bold',
-                    fontSize: 24
-                }}>Here is dynamic component imported as a page:</div>
                 <Suspense fallback={'Loading...'}>
                     <Routes>
                         <Route path={'/dummyTable'} element={<DummyTableLazy />}/>

@@ -1,14 +1,19 @@
-import { lazy, Suspense, useEffect, useState } from "react"
-import { NavLink, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
+
+let url = '/tabs.json'
+
+// Hardcoded fix for github pages
+if (window.location.href.includes('github.io')) {
+    url = '/backendless/tabs.json'
+}
 
 export const Tabs = () => {
-    const {pathname} = useLocation()
     const [tabsData, setTabsData] = useState([])
-    const [importedComponent, setImportedComponent] = useState()
 
     const loadTabsData = async () => {
         try {
-            const response = await fetch('/data/tabs.json')
+            const response = await fetch(url)
             const data = await response.json()
 
             setTabsData(data)
@@ -17,24 +22,9 @@ export const Tabs = () => {
         }
     }
 
-    const loadComponent = async () => {
-        const filePath = tabsData.find((tab) => pathname.includes(tab.id))?.path
-
-        if (filePath) {
-            const Component = await lazy(() => import(`/src/${filePath}x`))
-            setImportedComponent(<Component />)
-        }
-    }
-
     useEffect(() => {
         loadTabsData()
     }, [])
-
-    useEffect(() => {
-        if (pathname && tabsData.length > 0) {
-            loadComponent()
-        }
-    }, [tabsData, pathname])
 
     return (<>
         <div style={{
@@ -60,17 +50,6 @@ export const Tabs = () => {
                     )}
                 </NavLink>
             ))}
-        </div>
-        <div style={{
-            padding: '24px',
-        }}>
-            <div style={{
-                fontWeight: 'bold',
-                fontSize: 24
-            }}>Here is dynamic component imported from file:</div>
-            <Suspense fallback={'Loading...'}>
-                {importedComponent}
-            </Suspense>
         </div>
     </>)
 }
